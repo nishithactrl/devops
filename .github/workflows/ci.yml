@@ -1,16 +1,21 @@
-name: Simple CI Demo
+name: HTML Validation CI
 
 on:
+  pull_request:
+    branches: ["main"]
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-  demo-job:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - run: ls
+      - name: Install HTMLHint
+        run: npm install -g htmlhint
 
-      - run: echo "GitHub Actions working!"
+      - name: Run validation
+        run: htmlhint index.html
